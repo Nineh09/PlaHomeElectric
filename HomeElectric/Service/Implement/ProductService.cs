@@ -8,10 +8,12 @@ namespace Service.Implement
 {
     public class ProductService : IProductService
     {
-        private IProductRepository _productRepo;
-        public ProductService(IProductRepository productRepo)
+        private  readonly IProductRepository _productRepo;
+        private readonly ICategoryRepository _categoryRepo;
+        public ProductService(IProductRepository productRepo, ICategoryRepository categoryRepository)
         {
             _productRepo = productRepo;
+            _categoryRepo = categoryRepository;
         }
 
         public Task Add(Product entity)
@@ -58,12 +60,31 @@ namespace Service.Implement
 
         public Task<List<Product>> GetAll(params Expression<Func<Product, object>>[]? includeProperties)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var getAllProduct = _productRepo.GetAll(includeProperties);
+                return Task.FromResult(getAllProduct);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Task<Product?> GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var getProductById = _productRepo.GetById(id);
+                if(getProductById != null)
+                {
+                    getProductById.Category = _categoryRepo.GetById((int)getProductById.CategoryId!);
+                }
+                return Task.FromResult(getProductById);
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Task Update(Product entity)

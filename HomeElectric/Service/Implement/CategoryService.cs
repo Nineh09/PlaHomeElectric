@@ -47,7 +47,7 @@ namespace Service.Implement
                 }
                 else
                 {
-                    var checkProduct = _productRepo.GetAll().Where(x => x.CategoryId == entity.Id).ToList();
+                    var checkProduct = _productRepo.GetAll().Where(x => x.CategoryId == entity.Id && x.IsDeleted == true).ToList();
                     if(checkProduct != null)
                     {
                         throw new Exception("This category is containt product!");
@@ -56,6 +56,7 @@ namespace Service.Implement
                     {
                         entity.IsDeleted = true;
                         _cateRepo.Update(entity);
+                        _cateRepo.Save();
                     }
                 }
             }catch (Exception ex)
