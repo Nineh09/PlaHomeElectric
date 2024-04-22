@@ -13,8 +13,9 @@ namespace Service
     { 
         public static IServiceCollection AddServiceCollections(this IServiceCollection services)
         {
-           services.AddSingleton<IProductService, ProductService>();
-           return services;
+            services.AddSingleton<IProductService, ProductService>();
+            services.AddSingleton<ICategoryService, CategoryService>();
+            return services;
         }
     }
 }
