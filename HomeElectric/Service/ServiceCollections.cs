@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace Service
 {
     public static class ServiceCollections
-    {
+    { 
         public static IServiceCollection AddServiceCollections(this IServiceCollection services)
         {
            services.AddSingleton<IProductService, ProductService>();
-            return services;
+           return services;
         }
     }
 }

@@ -9,7 +9,13 @@ namespace Repository
         public static IServiceCollection AddRepositoryService(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
-            
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IOderRepository, OderRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
             return services;
         }
     }
