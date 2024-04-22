@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Layout\index.cshtml" />
+    <Content Remove="Pages\Layout\shop-detail.cshtml" />
     <Content Remove="Pages\Layout\shop.cshtml" />
   </ItemGroup>
 
@@ -26,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Layout\index.cshtml" />
+    <None Include="Pages\Layout\shop-detail.cshtml" />
     <None Include="Pages\Layout\shop.cshtml" />
   </ItemGroup>
 
