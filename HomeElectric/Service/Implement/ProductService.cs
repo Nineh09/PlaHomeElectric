@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Interface
+namespace Service.Implement
 {
-    public interface IGenericRepository
+    public class ProductService
     {
     }
 }
