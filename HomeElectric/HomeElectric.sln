@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeElectric", "HomeElectric\HomeElectric.csproj", "{04EAA400-2AA5-4DD2-B775-AF4F0BE9641B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeElectric", "HomeElectric\HomeElectric.csproj", "{04EAA400-2AA5-4DD2-B775-AF4F0BE9641B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{0032CFE7-6859-4120-8742-92C1694EF439}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{0032CFE7-6859-4120-8742-92C1694EF439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAO", "DAO\DAO.csproj", "{8DCB6A1F-6AB3-475A-884F-8DB9BD01138D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAO", "DAO\DAO.csproj", "{8DCB6A1F-6AB3-475A-884F-8DB9BD01138D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{A4B96DCB-9299-407C-9F04-A4E659DC7ECA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{A4B96DCB-9299-407C-9F04-A4E659DC7ECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{6637EC26-BBDE-48A9-BB52-A494F6F17019}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{6637EC26-BBDE-48A9-BB52-A494F6F17019}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
