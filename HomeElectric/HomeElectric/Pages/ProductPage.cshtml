@@ -1,0 +1,61 @@
+﻿@page
+@model ProductPageModel
+@{
+    ViewData["Title"] = "Product Page";
+    Layout = "_Layout";
+}
+@{
+    
+}
+<div class="container-fluid py-5 mb-5 hero-header">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-12 col-lg-7">
+                <h4 class="mb-3 text-secondary">Explore Our Organic Products</h4>
+                <h1 class="mb-5 display-3 text-primary">Browse by Category</h1>
+                <!-- Search Form -->
+                <form method="get" class="position-relative mx-auto" style="max-width: 600px;">
+                    <input type="text" name="SearchTerm" class="form-control border-2 border-secondary w-100 py-3 px-4 rounded-pill" value="@Model.SearchTerm" placeholder="Search products...">
+                    <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Search</button>
+                </form>
+            </div>
+            <div class="col-md-12 col-lg-5">
+                <!-- Optionally, you can add a carousel or other content here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Filters -->
+<div class="container py-3">
+    <ul class="nav nav-pills justify-content-center">
+        @foreach (var category in Model.Categories)
+        {
+            <li class="nav-item">
+                <a class="nav-link @((Model.CategoryFilter == category.CategoryName) ? "active" : "")" asp-route-CategoryFilter="@category.CategoryName">@category.CategoryName</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Products Display -->
+<div class="container-fluid fruite py-5">
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <img src="" class="card-img-top" alt="@product.ProductName">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.ProductName</h5>
+                            <p class="card-text">@product.Description</p>
+                            <p class="card-text"><small class="text-muted">Price: $@product.Price (Discount: @product.Discount%)</small></p>
+                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
