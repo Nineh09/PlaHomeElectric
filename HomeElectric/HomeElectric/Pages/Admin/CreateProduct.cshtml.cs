@@ -1,16 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BusinessObject;
+using Service.Implement;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Admin
 {
     public class CreateProductModel : PageModel
     {
-        private readonly YourDbContext _context;
+        private readonly IProductService productService;
 
-        public CreateProductModel(YourDbContext context)
+        public CreateProductModel(IProductService productService)
         {
-            _context = context;
+            this.productService = productService;
         }
 
         [BindProperty]
@@ -27,9 +29,7 @@ namespace HomeElectric.Pages.Admin
             {
                 return Page();
             }
-
-            _context.Products.Add(Product);
-            _context.SaveChanges();
+            productService.Add(Product);
 
             return RedirectToPage("/Admin/ProductList");
         }
