@@ -13,8 +13,8 @@ namespace Service
     { 
         public static IServiceCollection AddServiceCollections(this IServiceCollection services)
         {
-            services.AddSingleton<IProductService, ProductService>();
-            services.AddSingleton<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             return services;
         }
     }
