@@ -1,0 +1,72 @@
+﻿@page
+@model HomeElectric.Pages.Staff.CatetoryManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].ModificationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].DeletionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Category) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeletionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -6,17 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessObject;
-using Service.Interface;
 
-namespace HomeElectric.Pages.Admin.UserManager
+namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class CreateModel : PageModel
     {
-        private IUserService _userService;
+        private readonly BusinessObject.HomeElectricContext _context;
 
-        public CreateModel(IUserService userService)
+        public CreateModel(BusinessObject.HomeElectricContext context)
         {
-            _userService = userService;
+            _context = context;
         }
 
         public IActionResult OnGet()
@@ -25,19 +24,21 @@ namespace HomeElectric.Pages.Admin.UserManager
         }
 
         [BindProperty]
-        public User User { get; set; }
-
+        public Category Category { get; set; } = default!;
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+          if (!ModelState.IsValid || _context.Categories == null || Category == null)
             {
                 return Page();
             }
-            _userService.Add(User);
 
-            return RedirectToPage("/Admin/UserManager/Index");
+            _context.Categories.Add(Category);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

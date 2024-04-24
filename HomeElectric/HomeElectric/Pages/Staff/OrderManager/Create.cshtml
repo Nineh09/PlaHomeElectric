@@ -1,0 +1,63 @@
+﻿@page
+@model HomeElectric.Pages.Staff.OrderManager.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Order.Status" class="control-label"></label>
+                <input asp-for="Order.Status" class="form-control" />
+                <span asp-validation-for="Order.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.TotalPrice" class="control-label"></label>
+                <input asp-for="Order.TotalPrice" class="form-control" />
+                <span asp-validation-for="Order.TotalPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.UserId" class="control-label"></label>
+                <select asp-for="Order.UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.CreationDate" class="control-label"></label>
+                <input asp-for="Order.CreationDate" class="form-control" />
+                <span asp-validation-for="Order.CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ModificationDate" class="control-label"></label>
+                <input asp-for="Order.ModificationDate" class="form-control" />
+                <span asp-validation-for="Order.ModificationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.DeletionDate" class="control-label"></label>
+                <input asp-for="Order.DeletionDate" class="form-control" />
+                <span asp-validation-for="Order.DeletionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.IsDeleted" class="control-label"></label>
+                <input asp-for="Order.IsDeleted" class="form-control" />
+                <span asp-validation-for="Order.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

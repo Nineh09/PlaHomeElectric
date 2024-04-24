@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Admin.UserManager
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private IUserService _userService;
 
-        public EditModel(BusinessObject.HomeElectricContext context)
+        public EditModel(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -24,23 +25,15 @@ namespace HomeElectric.Pages.Admin.UserManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
 
-            var user =  await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            User = await _userService.GetById((int)id);
+
+            if (User == null)
             {
                 return NotFound();
             }
-            User = user;
-           ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
             return Page();
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,30 +41,16 @@ namespace HomeElectric.Pages.Admin.UserManager
                 return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _userService.Update(User);
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!UserExists(User.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool UserExists(int id)
-        {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return RedirectToPage("/Admin/UserManager/Index");
         }
     }
 }
