@@ -7,8 +7,8 @@ using Service.Interface;
 
 namespace HomeElectric.Pages
 {
-    public class CartViewModel : PageModel
-    {
+	public class CartViewModel : PageModel
+	{
 		private IProductService productService;
 		private IUserService userService;
 		public CartViewModel(IProductService productService, IUserService userService)
@@ -17,47 +17,38 @@ namespace HomeElectric.Pages
 			this.userService = userService;
 		}
 		[BindProperty]
-        public CartModel CartModel { get; set; } = default!;
-        [BindProperty]
-        public IList<CartDetailModel> CartDetail { get; set; } = default!;
-        public List<Payment> Payments { get; set; } = default!;
-        public IPaymentService _paymentService;
-        
-
-		public CartViewModel(IPaymentService paymentService)
-		{
-			this._paymentService = paymentService;
-		}
+		public CartModel CartModel { get; set; } = default!;
+		[BindProperty]
+		public IList<CartDetailModel> CartDetail { get; set; } = default!;
 
 		public async Task<IActionResult> OnGetAsync()
-        {
-            //string account = HttpContext.Session.GetString("role");
-            //if (account == null)
-            //{
-            //    return RedirectToPage("/Login");
-            //}
-            //if (account != null && account != "CUSTOMER")
-            //{
-            //    return RedirectToPage("/Login");
-            //}
-            var cartSession = HttpContext.Session.GetString("cartSession");
-            if(cartSession != null)
-            {
-                var cart = JsonConvert.DeserializeObject<CartModel>(cartSession);
-                if (cart != null)
-                {
-                    CartModel = cart;
-                    CartModel.CartList = cart.CartList;
-                    CartDetail = cart.CartList;
-                }
-                Payments = await _paymentService.GetAll();
-            }
-            else
-            {
-                return Page();
-            }
-            return Page();
-        }
+		{
+			//string account = HttpContext.Session.GetString("role");
+			//if (account == null)
+			//{
+			//    return RedirectToPage("/Login");
+			//}
+			//if (account != null && account != "CUSTOMER")
+			//{
+			//    return RedirectToPage("/Login");
+			//}
+			var cartSession = HttpContext.Session.GetString("cartSession");
+			if (cartSession != null)
+			{
+				var cart = JsonConvert.DeserializeObject<CartModel>(cartSession);
+				if (cart != null)
+				{
+					CartModel = cart;
+					CartModel.CartList = cart.CartList;
+					CartDetail = cart.CartList;
+				}
+			}
+			else
+			{
+				return Page();
+			}
+			return Page();
+		}
 		public async Task<IActionResult> OnPostAsync(int productId)
 		{
 			var cartSession = HttpContext.Session.GetString("cartSession");
@@ -66,7 +57,7 @@ namespace HomeElectric.Pages
 			if (productExistedInCart != null)
 			{
 				cartExisted.CartList.Remove(productExistedInCart);
-				cartExisted.TotalPrice -= productExistedInCart.Price*productExistedInCart.Quantity;
+				cartExisted.TotalPrice -= productExistedInCart.Price * productExistedInCart.Quantity;
 				HttpContext.Session.SetString("cartSession", cartExisted.ToJson());
 			}
 			return RedirectToPage();
