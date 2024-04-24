@@ -1,41 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BusinessObject;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.OrderManager
 {
-    public class EditModel : PageModel
+	public class EditModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+		public IOrderService orderService;
+		public IOrderDetailService orderDetailService;
+        public IUserService userService;
 
-        public EditModel(BusinessObject.HomeElectricContext context)
-        {
-            _context = context;
-        }
+		public EditModel(IOrderService orderService, IOrderDetailService orderDetailService, IUserService userService)
+		{
+			this.orderService = orderService;
+			this.orderDetailService = orderDetailService;
+		}
 
-        [BindProperty]
+		[BindProperty]
         public Order Order { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Orders == null)
-            {
-                return NotFound();
-            }
-
-            var order =  await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+            var order = await orderService.GetById((int)id);
             if (order == null)
             {
                 return NotFound();
             }
             Order = order;
-           ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(await userService.GetAll(), "Id", "Id");
             return Page();
         }
 
@@ -48,30 +42,17 @@ namespace HomeElectric.Pages.Staff.OrderManager
                 return Page();
             }
 
-            _context.Attach(Order).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+                orderService.Update(Order);
+            }catch (Exception ex)
             {
-                if (!OrderExists(Order.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw new Exception(ex.Message);
             }
 
             return RedirectToPage("./Index");
         }
 
-        private bool OrderExists(int id)
-        {
-          return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }

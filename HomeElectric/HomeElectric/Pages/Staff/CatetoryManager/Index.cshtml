@@ -2,71 +2,82 @@
 @model HomeElectric.Pages.Staff.CatetoryManager.IndexModel
 
 @{
+    Layout = "StaffLayout";
     ViewData["Title"] = "Index";
 }
+
+<!-- Link to external CSS file -->
+<link href="~/css/staffindex.css" rel="stylesheet" />
 
 <h1>Index</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].ModificationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].DeletionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].IsDeleted)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Category) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModificationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-wrapper" style="margin-top: 80px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].Description)
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].ModificationDate)
+                </th>
+                <th>
+                    Is Deleted
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Category)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @if (item.Status == 1)
+                        {
+                            <span class="status-active">Active</span>
+                        }
+                        else if (item.Status == 0)
+                        {
+                            <span class="status-inactive">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModificationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
