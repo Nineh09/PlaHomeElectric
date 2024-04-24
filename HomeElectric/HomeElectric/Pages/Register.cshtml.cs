@@ -1,3 +1,4 @@
+using BusinessObject;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interface;
@@ -64,9 +65,27 @@ namespace HomeElectric.Pages
                     return Page();
                 }
 
-                //var user = await _userService.CreateUser(FullName, Email, Password, ConfirmPassword, Phone);
-                //SuccessMessage = "Registration successful! Redirecting to login page...";
-                return Page();
+                var existingEmailUser = await _userService.GetUserByEmail(Email);
+                if (existingEmailUser != null)
+                {
+                    ErrorMessage = "Email already exists.";
+                    return Page();
+                }
+
+                var newUser = new User
+                {
+                    FullName = FullName,
+                    Email = Email,
+                    Password = Password,
+                    PhoneNumber = Phone,
+                    Status = 1,
+                    RoleId = 3
+                };
+
+                await _userService.Add(newUser);
+
+                SuccessMessage = "Registration successful. Redirecting to login page...";
+                return RedirectToPage("/Login");
             }
             catch (Exception ex)
             {
@@ -74,6 +93,5 @@ namespace HomeElectric.Pages
                 return Page();
             }
         }
-
     }
 }
