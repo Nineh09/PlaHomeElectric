@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Service
 {
     public static class ServiceCollections
-    { 
+    {
         public static IServiceCollection AddServiceCollections(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();

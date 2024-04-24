@@ -51,7 +51,7 @@
                             <h5 class="card-title">@product.ProductName</h5>
                             <p class="card-text">@product.Description</p>
                             <p class="card-text"><small class="text-muted">Price: $@product.Price (Discount: @product.Discount%)</small></p>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                            <a asp-page="/Customer/AddToCart" asp-route-id="@product.Id" class="btn btn-primary" style="cursor: pointer;">Add to Cart</a>
                         </div>
                     </div>
                 </div>
