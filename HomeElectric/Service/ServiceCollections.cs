@@ -19,7 +19,6 @@ namespace Service
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<IOrderService, OrderService>();
-
             return services;
         }
     }
