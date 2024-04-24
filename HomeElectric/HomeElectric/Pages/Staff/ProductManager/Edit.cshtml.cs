@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.ProductManager
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        public IProductService _productService;
+        private ICategoryService _categoryService;
 
-        public EditModel(BusinessObject.HomeElectricContext context)
+        public EditModel(IProductService productService, ICategoryService categoryService)
         {
-            _context = context;
+
+            _productService = productService;
+            _categoryService = categoryService;
         }
 
         [BindProperty]
@@ -24,23 +28,16 @@ namespace HomeElectric.Pages.Staff.ProductManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Products == null)
+            ViewData["CategoryId"] = new SelectList(await _categoryService.GetAll(), "Id", "CategoryName");
+            Product = await _productService.GetById(id.Value);
+            if (Product == null)
             {
                 return NotFound();
             }
 
-            var product =  await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            Product = product;
-           ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,30 +45,16 @@ namespace HomeElectric.Pages.Staff.ProductManager
                 return Page();
             }
 
-            _context.Attach(Product).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _productService.Update(Product);
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!ProductExists(Product.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool ProductExists(int id)
-        {
-          return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
