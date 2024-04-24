@@ -15,6 +15,12 @@ namespace DAO
                                                     string.Compare(x.Password!.Trim(), password.Trim()) == 0).FirstOrDefault();
             return cus;
         }
-        
+        public User? GetUserByEmail(string email)
+        {
+            var cus = _context.Users.Where(x =>
+                string.Compare(x.Email!.ToLower().Trim(), email.ToLower().Trim()) == 0).FirstOrDefault();
+
+            return cus;
+        }
     }
 }
