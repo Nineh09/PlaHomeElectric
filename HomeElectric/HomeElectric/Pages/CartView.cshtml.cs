@@ -2,12 +2,21 @@ using BusinessObject.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NuGet.Protocol;
+using Service.Interface;
 
 namespace HomeElectric.Pages
 {
     public class CartViewModel : PageModel
     {
-        [BindProperty]
+		private IProductService productService;
+		private IUserService userService;
+		public CartViewModel(IProductService productService, IUserService userService)
+		{
+			this.productService = productService;
+			this.userService = userService;
+		}
+		[BindProperty]
         public CartModel CartModel { get; set; } = default!;
         [BindProperty]
         public IList<CartDetailModel> CartDetail { get; set; } = default!;
@@ -40,5 +49,9 @@ namespace HomeElectric.Pages
             }
             return Page();
         }
-    }
+		public async Task<IActionResult> OnPostAsync(string action, int productQuantity, int productId)
+		{
+            return RedirectToPage();
+		}
+	}
 }
