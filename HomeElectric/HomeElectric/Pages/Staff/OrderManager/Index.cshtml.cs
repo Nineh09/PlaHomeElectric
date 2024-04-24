@@ -6,27 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.OrderManager
 {
     public class IndexModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        public IOrderService orderService;
+      
 
-        public IndexModel(BusinessObject.HomeElectricContext context)
+        public IndexModel( IOrderService orderService)
         {
-            _context = context;
-        }
 
+            this.orderService = orderService;
+        }
         public IList<Order> Order { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.Orders != null)
+            var listCus = await orderService.GetAll();
+            if (listCus != null)
             {
-                Order = await _context.Orders
-                .Include(o => o.User).ToListAsync();
+                Order = listCus;
             }
+            return Page();
         }
     }
 }
