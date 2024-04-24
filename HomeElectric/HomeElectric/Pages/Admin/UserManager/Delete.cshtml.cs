@@ -6,57 +6,53 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Admin.UserManager
 {
     public class DeleteModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private IUserService _userService;
 
-        public DeleteModel(BusinessObject.HomeElectricContext context)
+        public DeleteModel(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         [BindProperty]
-      public User User { get; set; } = default!;
+        public User User { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Users == null)
+            User = await _userService.GetById((int)id);
+
+            if (User == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                User = user;
-            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Users == null)
+            var user = await _userService.GetById((int)id);
+
+            if (user == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users.FindAsync(id);
 
-            if (user != null)
+            try
             {
-                User = user;
-                _context.Users.Remove(User);
-                await _context.SaveChangesAsync();
+                await _userService.Delete(user);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Admin/UserManager/Index");
         }
     }
 }
