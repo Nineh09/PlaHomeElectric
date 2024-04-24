@@ -10,5 +10,8 @@ namespace Repository.Repositories
 {
     public class ImageRepository : GenericRepository<Image>, IImageRepository
     {
+        public ImageRepository(HomeElectricContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

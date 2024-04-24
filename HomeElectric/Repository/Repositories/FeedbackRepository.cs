@@ -10,5 +10,8 @@ namespace Repository.Repositories
 {
     public class FeedbackRepository : GenericRepository<Feedback>, IFeedbackRepository
     {
+        public FeedbackRepository(HomeElectricContext dbContext) : base(dbContext)
+        {
+        }
     }
 }
