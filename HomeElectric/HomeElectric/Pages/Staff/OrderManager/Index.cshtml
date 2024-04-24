@@ -5,12 +5,15 @@
     ViewData["Title"] = "Index";
     Layout = "StaffLayout";
 }
+<link href="~/css/staffindex.css" rel="stylesheet" />
+
 
 <h1>Index</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<div class="table-wrapper" style="margin-top: 80px;">
 <table class="table">
     <thead>
         <tr>
@@ -71,3 +74,4 @@
 }
     </tbody>
 </table>
+</div>
