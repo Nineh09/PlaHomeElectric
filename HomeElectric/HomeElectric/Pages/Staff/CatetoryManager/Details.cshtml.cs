@@ -6,36 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class DetailsModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public DetailsModel(BusinessObject.HomeElectricContext context)
+        public Category Category { get; set; }
+
+        public DetailsModel(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
-
-      public Category Category { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            Category = await _categoryService.GetById(id.Value);
+
+            if (Category == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Category = category;
-            }
+
             return Page();
         }
     }
