@@ -10,5 +10,8 @@ namespace Repository.Repositories
 {
     public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
+        public CategoryRepository(HomeElectricContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

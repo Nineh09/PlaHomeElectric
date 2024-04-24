@@ -62,7 +62,7 @@ namespace Service.Implement
         {
             try
             {
-                var getAllProduct = _productRepo.GetAll(includeProperties);
+                var getAllProduct = _productRepo.GetAll();
                 return Task.FromResult(getAllProduct);
             }
             catch(Exception ex)

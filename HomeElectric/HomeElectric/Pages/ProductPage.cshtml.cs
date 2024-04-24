@@ -1,20 +1,23 @@
-﻿using BusinessObject;
+using BusinessObject;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interface;
 
 namespace HomeElectric.Pages
 {
-    public class IndexModel : PageModel
+    public class ProductPageModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, IProductService productService, ICategoryService categoryService)
+        [BindProperty(SupportsGet = true)]
+        public string CategoryFilter { get; set; }
+        public ProductPageModel(IProductService productService, ICategoryService categoryService)
         {
-            _logger = logger;
             _productService = productService;
             _categoryService = categoryService;
         }
@@ -23,7 +26,6 @@ namespace HomeElectric.Pages
         {
             Products = await _productService.GetAll();
             Categories = await _categoryService.GetAll();
-            
         }
     }
 }

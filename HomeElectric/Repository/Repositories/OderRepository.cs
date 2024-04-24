@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class OderRepository : GenericRepository<Order> , IOderRepository
+    public class OderRepository : GenericRepository<Order>, IOderRepository
     {
+        public OderRepository(HomeElectricContext dbContext) : base(dbContext)
+        {
+        }
     }
 }
