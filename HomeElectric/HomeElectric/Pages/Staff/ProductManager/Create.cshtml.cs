@@ -6,40 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.ProductManager
 {
     public class CreateModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly IProductService productService;
 
-        public CreateModel(BusinessObject.HomeElectricContext context)
+        public CreateModel(IProductService productService)
         {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-            return Page();
+            this.productService = productService;
         }
 
         [BindProperty]
-        public Product Product { get; set; } = default!;
-        
+        public Product Product { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnGet()
         {
-          if (!ModelState.IsValid || _context.Products == null || Product == null)
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+            productService.Add(Product);
 
-            _context.Products.Add(Product);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Admin/ProductList");
         }
     }
 }
