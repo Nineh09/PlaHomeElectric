@@ -14,6 +14,7 @@ namespace Service.Implement
     {
         private readonly IUserRepository _userRepository;
 
+
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -31,7 +32,14 @@ namespace Service.Implement
 
         public Task<List<User>> GetAll(params Expression<Func<User, object>>[]? includeProperties)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Task.FromResult(_userRepository.GetAll());
+            }
+            catch
+            {
+                throw new Exception("Somethings has wrong, please refresh page!");
+            }
         }
 
         public Task<User?> GetById(int id)
