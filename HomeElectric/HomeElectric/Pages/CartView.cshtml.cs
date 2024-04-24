@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HomeElectric.Pages.Customer
+namespace HomeElectric.Pages
 {
     public class CartViewModel : PageModel
     {
