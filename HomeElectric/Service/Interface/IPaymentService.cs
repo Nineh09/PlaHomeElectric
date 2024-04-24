@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Interface
 {
-    public interface IPaymentRepository : IGenericService<Payment>
+    public interface IPaymentService : IGenericService<Payment>
     {
     }
 }
