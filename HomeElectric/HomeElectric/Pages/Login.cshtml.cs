@@ -49,7 +49,7 @@ namespace HomeElectric.Pages
                 }
                 else if (user.RoleId == 2)
                 {
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("/Staff/StaffDashBoard");
                 }
                 else
                 {
