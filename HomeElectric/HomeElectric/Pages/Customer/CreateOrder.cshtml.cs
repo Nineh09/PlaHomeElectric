@@ -3,6 +3,7 @@ using BusinessObject.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using NuGet.Protocol;
 using Service.Interface;
 using Stripe;
 
@@ -44,7 +45,10 @@ namespace HomeElectric.Pages.Customer
 				};
 				orderDetailService.Add(orderDetail);
 			}
-			return RedirectToPage("/ProductPage");
+			cartExisted.CartList.Clear();
+			cartExisted.TotalPrice = 0;
+			HttpContext.Session.SetString("cartSession", cartExisted.ToJson());
+			return RedirectToPage("/CartView");
 		}
 	}
 }
