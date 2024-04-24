@@ -1,4 +1,6 @@
-﻿using DAO;
+﻿using BusinessObject;
+using DAO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
+        protected HomeElectricContext _dbContext;
         private GenericDao<T> _dao;
 
-        public GenericRepository()
+        public GenericRepository(HomeElectricContext dbContext)
         {
+            _dbContext = dbContext;
             _dao = new GenericDao<T>();
         }
 

@@ -9,5 +9,6 @@ namespace Repository.IRepository
 {
     public interface IUserRepository : IGenericRepository<User>
     {
+        User GetUser(string email, string password);
     }
 }
