@@ -21,7 +21,11 @@ namespace Service.Implement
         {
             _userRepository = userRepository;
         }
-
+        public async Task<User> GetUserByEmail(string email)
+        {
+            User user = _userRepository.GetUserByEmail(email);
+            return await Task.FromResult(user);
+        }
         public Task Add(User entity)
         {
             try

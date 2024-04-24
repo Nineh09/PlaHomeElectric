@@ -16,5 +16,9 @@ namespace Repository.Repositories
         {
             return _dao.GetUser(email, password);
         }
+        public User? GetUserByEmail(string email)
+        {
+            return _dao.GetUserByEmail(email);
+        }
     }
 }
