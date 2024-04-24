@@ -23,7 +23,6 @@ namespace HomeElectric.Pages
         {
             Products = await _productService.GetAll();
             Categories = await _categoryService.GetAll();
-            
         }
     }
 }

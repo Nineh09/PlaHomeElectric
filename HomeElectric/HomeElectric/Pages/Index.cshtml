@@ -20,12 +20,16 @@
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active rounded">
-                            <img src="img/hero-img-1.png" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+                            <img src="img/modern-devices.jpg" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
+                            <a href="#" class="btn px-4 py-2 text-white rounded">Electronics</a>
                         </div>
                         <div class="carousel-item rounded">
-                            <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
+                            <img src="img/clothing.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                            <a href="#" class="btn px-4 py-2 text-white rounded">Clothing</a>
+                        </div>
+                        <div class="carousel-item rounded">
+                            <img src="img/book.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                            <a href="#" class="btn px-4 py-2 text-white rounded">Books</a>
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -103,6 +107,7 @@
                 @foreach (var product in Model.Products)
                 {
                     <div class="col-md-6 col-lg-4 col-xl-3">
+                        <a href="@Url.Page("/ShopDetail", new {id = product.Id})">
                         <div class="rounded position-relative fruite-item">
                             <div class="fruite-img">
                                 <img src="anhchuaco" class="img-fluid w-100 rounded-top" alt="@product.ProductName">
@@ -117,6 +122,7 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
                     </div>
                 }
             </div>
