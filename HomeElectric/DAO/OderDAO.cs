@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class OderDAO : GenericDao<User>
+    public class OderDAO : GenericDao<Order>
     {
     }
 }

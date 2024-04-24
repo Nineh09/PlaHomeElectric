@@ -20,8 +20,16 @@ namespace HomeElectric.Pages
         public CartModel CartModel { get; set; } = default!;
         [BindProperty]
         public IList<CartDetailModel> CartDetail { get; set; } = default!;
+        public List<Payment> Payments { get; set; } = default!;
+        public IPaymentService _paymentService;
+        
 
-        public async Task<IActionResult> OnGetAsync()
+		public CartViewModel(IPaymentService paymentService)
+		{
+			this._paymentService = paymentService;
+		}
+
+		public async Task<IActionResult> OnGetAsync()
         {
             //string account = HttpContext.Session.GetString("role");
             //if (account == null)
@@ -42,6 +50,7 @@ namespace HomeElectric.Pages
                     CartModel.CartList = cart.CartList;
                     CartDetail = cart.CartList;
                 }
+                Payments = await _paymentService.GetAll();
             }
             else
             {

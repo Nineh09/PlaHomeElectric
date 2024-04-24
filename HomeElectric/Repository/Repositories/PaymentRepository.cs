@@ -10,8 +10,6 @@ namespace Repository.Repositories
 {
     public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
     {
-        public PaymentRepository(HomeElectricContext dbContext) : base(dbContext)
-        {
-        }
+        
     }
 }

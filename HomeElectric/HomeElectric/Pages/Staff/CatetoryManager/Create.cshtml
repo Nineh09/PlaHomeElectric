@@ -1,0 +1,64 @@
+﻿@page
+@model HomeElectric.Pages.Staff.CatetoryManager.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Category</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Category.CategoryName" class="control-label"></label>
+                <input asp-for="Category.CategoryName" class="form-control" />
+                <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.Description" class="control-label"></label>
+                <input asp-for="Category.Description" class="form-control" />
+                <span asp-validation-for="Category.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.Status" class="control-label"></label>
+                <input asp-for="Category.Status" class="form-control" />
+                <span asp-validation-for="Category.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.CreationDate" class="control-label"></label>
+                <input asp-for="Category.CreationDate" class="form-control" />
+                <span asp-validation-for="Category.CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.ModificationDate" class="control-label"></label>
+                <input asp-for="Category.ModificationDate" class="form-control" />
+                <span asp-validation-for="Category.ModificationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.DeletionDate" class="control-label"></label>
+                <input asp-for="Category.DeletionDate" class="form-control" />
+                <span asp-validation-for="Category.DeletionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.IsDeleted" class="control-label"></label>
+                <input asp-for="Category.IsDeleted" class="form-control" />
+                <span asp-validation-for="Category.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
