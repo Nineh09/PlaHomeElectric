@@ -13,16 +13,24 @@ namespace HomeElectric.Pages.Admin.UserManager
     public class DetailsModel : PageModel
     {
         private IUserService _userService;
+        private IRoleService _roleService;
 
-        public DetailsModel(IUserService userService)
+        public DetailsModel(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         public User User { get; set; } = default!;
+        public string RoleName { get; set; } = "";
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             User = await _userService.GetById((int)id);
 
             if (User == null)
@@ -30,7 +38,17 @@ namespace HomeElectric.Pages.Admin.UserManager
                 return NotFound();
             }
 
+            if (User.RoleId != null)
+            {
+                Role role = await _roleService.GetById(User.RoleId.Value);
+                if (role != null)
+                {
+                    RoleName = role.RoleName;
+                }
+            }
+
             return Page();
         }
+
     }
 }

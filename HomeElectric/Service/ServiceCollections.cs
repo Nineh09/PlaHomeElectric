@@ -15,6 +15,7 @@ namespace Service
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IOrderDetailService, OrderDetailService>();
