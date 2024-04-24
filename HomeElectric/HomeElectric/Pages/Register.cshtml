@@ -1,0 +1,71 @@
+﻿@page
+@model HomeElectric.Pages.RegisterModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup</title>
+    <!-- Custom CSS File -->
+    <link href="~/css/register.css" rel="stylesheet" />
+</head>
+<body style="background:#81C408">
+    <div class="container">
+        <!-- Registration Form -->
+        <div class="registration form">
+            <header style="font-family: 'Poppins', sans-serif;">Signup</header>
+            <form method="post">
+                <input type="text" placeholder="Enter your name" asp-for="FullName">
+                <input type="text" placeholder="Enter your email" asp-for="Email">
+                <input type="password" placeholder="Create a password" asp-for="Password">
+                <input type="password" placeholder="Confirm your password" asp-for="ConfirmPassword">
+                <input type="text" placeholder="Enter your phone number" asp-for="Phone">
+
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert" style="color: red">
+                        @Model.ErrorMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                {
+                    <div class="alert alert-success" role="alert" style="color: green">
+                        @Model.SuccessMessage
+                        <script>
+                            setTimeout(function () {
+                                redirectToLogin();
+                            }, 3000);
+                        </script>
+                    </div>
+                }
+
+                <div asp-validation-summary="All" class="text-danger" style="color: red"></div>
+
+                <input type="submit" class="button" value="Signup" asp-page-handler="Register">
+            </form>
+            <div class="signup">
+                <span class="signup" style="font-family: 'Poppins', sans-serif;">
+                    Already have an account?
+                    <a style="color: #81C408" href="/Login">Login</a>
+                </span>
+            </div>
+            <div class="home" style="text-align: center;">
+                <a href="/">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/login.js"></script>
+    <script>
+        // Function to handle OK button click
+        function redirectToLogin() {
+            window.location.href = '/Login';
+        }
+    </script>
+</body>
+</html>
