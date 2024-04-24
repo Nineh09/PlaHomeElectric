@@ -38,6 +38,7 @@ namespace HomeElectric.Pages
             if (user != null)
             {
                 HttpContext.Session.SetString("Email", Email);
+                HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("RoleId",
                         user.RoleId == 1 ? "Admin" :
                         user.RoleId == 2 ? "Manager" : "Customer");

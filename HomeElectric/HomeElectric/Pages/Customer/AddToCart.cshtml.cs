@@ -18,7 +18,7 @@ namespace HomeElectric.Pages.Customer
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string user = HttpContext.Session.GetString("role");
+            string user = HttpContext.Session.GetString("RoleId");
             //if (user == null)
             //{
             //    return RedirectToPage("/Login");

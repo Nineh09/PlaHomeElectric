@@ -80,7 +80,9 @@
 							<h5 class="mb-0 ps-4 me-4">Total</h5>
 							<p class="mb-0 pe-4">@Html.DisplayFor(model => model.CartModel.TotalPrice)</p>
 						</div>
-						<button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+						<a id="proceedCheckoutBtn" href="/Customer/CreateOrder" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed Checkout</a>
+						@* <a href="/Customer/CreateOrder" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Proceed Checkout</a> *@
+						@* <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button> *@
 					</div>
 				</div>
 			</div>
@@ -101,3 +103,11 @@ else
 		</div>
 	</div>
 }
+<script>
+	document.getElementById("proceedCheckoutBtn").addEventListener("click", function (event) {
+		event.preventDefault();
+		var confirmation = confirm("Are you sure you want to create order?"); if (confirmation) {
+			window.location.href = event.target.href;
+		}
+	});
+</script>
