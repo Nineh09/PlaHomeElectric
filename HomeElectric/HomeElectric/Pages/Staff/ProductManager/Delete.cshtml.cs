@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.ProductManager
 {
     public class DeleteModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        public IProductService _productService;
 
-        public DeleteModel(BusinessObject.HomeElectricContext context)
+        public DeleteModel(IProductService productService)
         {
-            _context = context;
+
+            _productService = productService;
         }
 
         [BindProperty]
@@ -23,38 +25,29 @@ namespace HomeElectric.Pages.Staff.ProductManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+            Product = await _productService.GetById(id.Value);
 
-            if (product == null)
+            if (Product == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Product = product;
-            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var product = await _context.Products.FindAsync(id);
 
-            if (product != null)
-            {
-                Product = product;
-                _context.Products.Remove(Product);
-                await _context.SaveChangesAsync();
-            }
+            await _productService.Delete(Product);
 
             return RedirectToPage("./Index");
         }
