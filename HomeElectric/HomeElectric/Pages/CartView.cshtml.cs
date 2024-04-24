@@ -14,15 +14,15 @@ namespace HomeElectric.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //string account = HttpContext.Session.GetString("role");
-            //if (account == null)
-            //{
-            //    return RedirectToPage("/Login");
-            //}
-            //if (account != null && account != "CUSTOMER")
-            //{
-            //    return RedirectToPage("/Login");
-            //}
+            string account = HttpContext.Session.GetString("role");
+            if (account == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            if (account != null && account != "CUSTOMER")
+            {
+                return RedirectToPage("/Login");
+            }
             var cartSession = HttpContext.Session.GetString("cartSession");
             if(cartSession != null)
             {

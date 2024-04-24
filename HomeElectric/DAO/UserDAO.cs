@@ -11,8 +11,8 @@ namespace DAO
     {
         public User? GetUser(string email, string password)
         {
-            var cus = _context.Users.Where(x => string.Compare(x.Email.ToLower().Trim(), email.ToLower().Trim()) == 0 &&
-                                                    string.Compare(x.Password.Trim(), password.Trim()) == 0).FirstOrDefault();
+            var cus = _context.Users.Where(x => string.Compare(x.Email!.ToLower().Trim(), email.ToLower().Trim()) == 0 &&
+                                                    string.Compare(x.Password!.Trim(), password.Trim()) == 0).FirstOrDefault();
             return cus;
         }
         
