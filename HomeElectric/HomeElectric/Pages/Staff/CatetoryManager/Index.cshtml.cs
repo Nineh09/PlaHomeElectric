@@ -6,26 +6,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class IndexModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly ILogger<IndexModel> _logger;
+        private readonly ICategoryService _categoryService;
 
-        public IndexModel(BusinessObject.HomeElectricContext context)
+        public List<Category> Categories { get; set; }
+        public IList<Category> Category { get; set; } = new List<Category>();
+
+        public IndexModel(ILogger<IndexModel> logger, ICategoryService categoryService)
         {
-            _context = context;
+            _logger = logger;
+            _categoryService = categoryService;
         }
-
-        public IList<Category> Category { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Categories != null)
+            Categories = await _categoryService.GetAll();
+            if (Categories != null && Categories.Count > 0)
             {
-                Category = await _context.Categories.ToListAsync();
+                Category = Categories.ToList();
             }
         }
     }
+
 }
