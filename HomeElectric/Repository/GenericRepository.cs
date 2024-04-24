@@ -12,12 +12,12 @@ namespace Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected HomeElectricContext _dbContext;
+       
         private GenericDao<T> _dao;
 
-        public GenericRepository(HomeElectricContext dbContext)
+        public GenericRepository()
         {
-            _dbContext = dbContext;
+           // _dbContext = dbContext;
             _dao = new GenericDao<T>();
         }
 

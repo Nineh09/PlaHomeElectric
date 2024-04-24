@@ -10,8 +10,6 @@ namespace Repository.Repositories
 {
     public class OderRepository : GenericRepository<Order>, IOderRepository
     {
-        public OderRepository(HomeElectricContext dbContext) : base(dbContext)
-        {
-        }
+        
     }
 }

@@ -64,8 +64,8 @@ namespace HomeElectric.Pages
                     return Page();
                 }
 
-                var user = await _userService.CreateUser(FullName, Email, Password, ConfirmPassword, Phone);
-                SuccessMessage = "Registration successful! Redirecting to login page...";
+                //var user = await _userService.CreateUser(FullName, Email, Password, ConfirmPassword, Phone);
+                //SuccessMessage = "Registration successful! Redirecting to login page...";
                 return Page();
             }
             catch (Exception ex)

@@ -9,8 +9,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddRepositoryService();
 builder.Services.AddServiceCollections();
-builder.Services.AddDbContext<HomeElectricContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("HomeElectric")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

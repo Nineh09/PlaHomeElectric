@@ -49,19 +49,6 @@ namespace Service.Implement
         {
             throw new NotImplementedException();
         }
-        public Task<bool> ExistByEmail(string email)
-        {
-            return Task.FromResult(_userRepository.CheckExistingEmail(email));
-        }
-
-        public Task<bool> ExistByTelephone(string phone)
-        {
-            return Task.FromResult(_userRepository.CheckExistingPhone(phone));
-        }
-
-        public Task<User> CreateUser(string name, string email, string password, string confirmPassword, string phone)
-        {
-            return Task.FromResult(_userRepository.CreateUser(new User(), name, email, password, confirmPassword, phone));
-        }
+       
     }
 }
