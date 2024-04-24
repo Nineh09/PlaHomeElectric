@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.IRepository
+namespace DAO
 {
-     public interface  IOderRepository : IGenericRepository<Order>
-    {
-    }
+	public class OderDetailDAO : GenericDao<OrderDetail>
+	{
+	}
 }

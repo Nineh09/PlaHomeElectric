@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,11 @@ namespace Service.Implement
     public class PaymentService : IPaymentService
     {
         private readonly IPaymentRepository _paymentRepository;
-
-        public PaymentService(IPaymentRepository paymentRepository)
+        private readonly IOrderDetailRepository _orderDetailRepository;
+        public PaymentService(IPaymentRepository paymentRepository, IOrderDetailRepository orderDetailRepository)
         {
             _paymentRepository = paymentRepository;
+            _orderDetailRepository = orderDetailRepository;
         }
 
         public Task Add(Payment entity)
@@ -45,7 +47,12 @@ namespace Service.Implement
         {
             try
             {
-                return Task.FromResult(_paymentRepository.GetById(id));
+                var listFeedback = _paymentRepository.GetById(id);
+                if(listFeedback != null)
+                {
+                    listFeedback.OrderDetail = _orderDetailRepository.GetById((int)listFeedback.OrderDetailId!);
+                }
+                return Task.FromResult(listFeedback);
             }
             catch (Exception ex)
             {
