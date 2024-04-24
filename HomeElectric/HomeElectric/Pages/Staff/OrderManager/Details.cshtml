@@ -1,6 +1,5 @@
 ﻿@page
 @model HomeElectric.Pages.Staff.OrderManager.DetailsModel
-
 @{
     ViewData["Title"] = "Details";
     Layout = "StaffLayout";
@@ -55,7 +54,30 @@
             @Html.DisplayFor(model => model.Order.User.Id)
         </dd>
     </dl>
+    <h2>Order Details</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => detail.Product.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => detail.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => detail.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => detail.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Order?.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>

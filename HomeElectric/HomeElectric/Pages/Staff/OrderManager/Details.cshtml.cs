@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject;
 using Service.Interface;
 using System.Collections.Immutable;
+using Service.Implement;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace HomeElectric.Pages.Staff.OrderManager
 {
@@ -22,19 +24,20 @@ namespace HomeElectric.Pages.Staff.OrderManager
             this.orderService = orderService;   
 		}
 
-		public Order Order { get; set; } = default!; 
+		public Order Order { get; set; } = default!;
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var order = await orderService.GetById((int)id);
-            if (order == null)
+            Order = await orderService.GetById((int)id);
+            if (Order == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Order = order;
-            }
+
+            OrderDetail? orderDetail = await orderDetailService.GetById(Order.Id);
+            OrderDetails.Add(orderDetail);
+            
             return Page();
         }
     }

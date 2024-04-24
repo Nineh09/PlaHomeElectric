@@ -16,6 +16,7 @@ namespace HomeElectric.Pages.Staff.OrderManager
 		{
 			this.orderService = orderService;
 			this.orderDetailService = orderDetailService;
+            this.userService = userService;
 		}
 
 		[BindProperty]
@@ -29,7 +30,7 @@ namespace HomeElectric.Pages.Staff.OrderManager
                 return NotFound();
             }
             Order = order;
-            ViewData["UserId"] = new SelectList(await userService.GetAll(), "Id", "Id");
+            ViewData["UserId"] = new SelectList(await userService.GetAll(), "Id", "FullName");
             return Page();
         }
 
