@@ -49,9 +49,18 @@ namespace HomeElectric.Pages
             }
             return Page();
         }
-		public async Task<IActionResult> OnPostAsync(string action, int productQuantity, int productId)
+		public async Task<IActionResult> OnPostAsync(int productId)
 		{
-            return RedirectToPage();
+			var cartSession = HttpContext.Session.GetString("cartSession");
+			var cartExisted = JsonConvert.DeserializeObject<CartModel>(cartSession);
+			var productExistedInCart = cartExisted.CartList.Where(x => x.ProductId != null && x.ProductId == productId).FirstOrDefault();
+			if (productExistedInCart != null)
+			{
+				cartExisted.CartList.Remove(productExistedInCart);
+				cartExisted.TotalPrice -= productExistedInCart.Price*productExistedInCart.Quantity;
+				HttpContext.Session.SetString("cartSession", cartExisted.ToJson());
+			}
+			return RedirectToPage();
 		}
 	}
 }
