@@ -6,27 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HomeElectric.Pages.Staff.ProductManager
 {
     public class IndexModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        public IProductService productService;
+        private ICategoryService _categoryService;
 
-        public IndexModel(BusinessObject.HomeElectricContext context)
+        public IndexModel(IProductService productService, ICategoryService categoryService)
         {
-            _context = context;
+
+            this.productService = productService;
+            _categoryService = categoryService;
         }
 
         public IList<Product> Product { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.Products != null)
+            ViewData["CategoryId"] = new SelectList(await _categoryService.GetAll(), "Id", "Id");
+            var listPro = await productService.GetAll();
+            if (listPro != null)
             {
-                Product = await _context.Products
-                .Include(p => p.Category).ToListAsync();
+                Product = listPro;
             }
+            return Page();
         }
     }
 }

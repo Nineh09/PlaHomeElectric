@@ -38,10 +38,12 @@ namespace Service.Implement
                     {
                         //CustomerId = nextId,
                         FullName = entity.FullName,
-                        PhoneNumber = entity.PhoneNumber,   
+                        PhoneNumber = entity.PhoneNumber,
                         Email = entity.Email,
                         Password = entity.Password,
                         Address = entity.Address,
+                        Status = entity.Status,
+                        RoleId = entity.RoleId,
                         Description = entity.Description,
                         CreationDate = DateTime.Now, 
                     };
@@ -120,6 +122,9 @@ namespace Service.Implement
                         user.PhoneNumber = entity.PhoneNumber;
                         user.Address = entity.FullName;
                         user.Email = entity.Email;
+                        user.RoleId =  entity.RoleId;
+                        user.Status = entity.Status;
+                        user.Description = entity.Description;
                         user.ModificationDate = DateTime.Now;
 
                         _userRepository.Update(user);

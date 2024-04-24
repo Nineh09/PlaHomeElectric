@@ -6,36 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.ProductManager
 {
     public class DetailsModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        public IProductService _productService;
 
-        public DetailsModel(BusinessObject.HomeElectricContext context)
+        public DetailsModel(IProductService productService)
         {
-            _context = context;
+
+            _productService = productService;
         }
 
-      public Product Product { get; set; } = default!; 
+        public Product Product { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            Product = await _productService.GetById(id.Value);
+
+            if (Product == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Product = product;
-            }
+
             return Page();
         }
     }

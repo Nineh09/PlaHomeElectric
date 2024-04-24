@@ -14,10 +14,12 @@ namespace HomeElectric.Pages.Admin.UserManager
     public class EditModel : PageModel
     {
         private IUserService _userService;
+        private IRoleService _roleService;
 
-        public EditModel(IUserService userService)
+        public EditModel(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         [BindProperty]
@@ -25,7 +27,7 @@ namespace HomeElectric.Pages.Admin.UserManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-
+            ViewData["RoleId"] = new SelectList(await _roleService.GetAll(), "Id", "RoleName");
             User = await _userService.GetById((int)id);
 
             if (User == null)
