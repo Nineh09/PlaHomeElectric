@@ -1,20 +1,21 @@
-﻿/* Table styles */
-.table {
-    width: 100%;
+﻿.table {
     border-collapse: collapse;
+    width: calc(100% - 20px); /* Subtract 20px for the left and right margins */
+    margin: 0 auto; /* Center the table */
+    padding: 0 10px; /* 10px padding on the left and right sides */
 }
 
-    .table th, .table td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+.table th,
+.table td {
+    border: 1px solid #dddddd;
+    text-align: center; /* Center align all content */
+    padding: 8px;
+}
 
-    .table th {
-        background-color: #f2f2f2;
-    }
+.table th {
+    background-color: #f2f2f2;
+}
 
-/* Status styles */
 .status-active {
     color: green;
 }

@@ -41,7 +41,7 @@ namespace HomeElectric.Pages
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("RoleId",
                         user.RoleId == 1 ? "Admin" :
-                        user.RoleId == 2 ? "Manager" : "Customer");
+                        user.RoleId == 2 ? "Staff" : "Customer");
 
                 if (user.RoleId == 1)
                 {

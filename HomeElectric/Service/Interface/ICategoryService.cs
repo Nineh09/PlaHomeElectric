@@ -10,5 +10,6 @@ namespace Service.Interface
 {
     public interface ICategoryService : IGenericService<Category>
     {
+        Task<Category> GetCateName(string name);
     }
 }

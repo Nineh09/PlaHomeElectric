@@ -1,45 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public EditModel(BusinessObject.HomeElectricContext context)
+        public EditModel(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public Category Category { get; set; }
+
+        // Thêm thuộc tính để lưu trữ tên danh mục ban đầu
+        public string OriginalCategoryName { get; set; }
+
+        // Thêm thuộc tính để lưu trạng thái checkbox
+        [BindProperty]
+        public bool IsDeletedChecked { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category =  await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            Category = await _categoryService.GetById(id.Value);
+
+            if (Category == null)
             {
                 return NotFound();
             }
-            Category = category;
+
+            // Lưu trữ tên danh mục ban đầu
+            OriginalCategoryName = Category.CategoryName;
+
+            // Set trạng thái checkbox
+            IsDeletedChecked = Category.IsDeleted ?? false;
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,30 +56,40 @@ namespace HomeElectric.Pages.Staff.CatetoryManager
                 return Page();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
+            // Kiểm tra trùng tên danh mục
+            if (Category.CategoryName != OriginalCategoryName)
+            {
+                var existingCategory = await _categoryService.GetCateName(Category.CategoryName);
+                if (existingCategory != null && existingCategory.Id != Category.Id)
+                {
+                    ModelState.AddModelError("Category.CategoryName", "This category name already exists.");
+                    return Page();
+                }
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                // Cập nhật thời gian chỉnh sửa
+                Category.ModificationDate = DateTime.Now;
+
+                // Cập nhật trạng thái IsDeleted
+                Category.IsDeleted = IsDeletedChecked;
+
+                // Nếu IsDeleted được chọn là true, cập nhật thời gian xóa
+                if (Category.IsDeleted ?? false)
+                {
+                    Category.DeletionDate = DateTime.Now;
+                }
+
+                await _categoryService.Update(Category);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!CategoryExists(Category.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                // Xử lý khi có lỗi xảy ra
+                return RedirectToPage("/Error");
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool CategoryExists(int id)
-        {
-          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

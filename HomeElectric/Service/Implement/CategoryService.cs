@@ -1,5 +1,6 @@
 ﻿using BusinessObject;
 using Repository.IRepository;
+using Repository.Repositories;
 using Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace Service.Implement
                 else
                 {
                     var checkProduct = _productRepo.GetAll().Where(x => x.CategoryId == entity.Id && x.IsDeleted == true).ToList();
-                    if(checkProduct != null)
+                    if (checkProduct != null)
                     {
                         throw new Exception("This category is containt product!");
                     }
@@ -59,7 +60,8 @@ namespace Service.Implement
                         _cateRepo.Save();
                     }
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -92,12 +94,18 @@ namespace Service.Implement
                 {
                     return Task.FromResult(resultGet)!;
                 }
-                
+
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public Task<Category> GetCateName(string name)
+        {
+            Category category = _cateRepo.GetCateName(name);
+            return Task.FromResult(category);
         }
 
         public Task Update(Category entity)
@@ -106,8 +114,9 @@ namespace Service.Implement
             {
                 _cateRepo.Update(entity);
                 _cateRepo.Save();
-                return Task.CompletedTask; 
-            }catch (Exception ex)
+                return Task.CompletedTask;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

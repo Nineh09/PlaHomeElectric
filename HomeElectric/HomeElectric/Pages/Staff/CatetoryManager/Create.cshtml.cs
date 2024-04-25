@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class CreateModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public CreateModel(BusinessObject.HomeElectricContext context)
+        public CreateModel(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
 
         public IActionResult OnGet()
@@ -24,21 +22,37 @@ namespace HomeElectric.Pages.Staff.CatetoryManager
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
-        
+        public Category Category { get; set; } = new Category();
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Categories == null || Category == null)
+            if (!ModelState.IsValid || Category == null)
             {
                 return Page();
             }
 
-            _context.Categories.Add(Category);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var existingCategory = await _categoryService.GetCateName(Category.CategoryName);
+                if (existingCategory != null)
+                {
+                    ModelState.AddModelError("", "Category already exists.");
+                    return Page();
+                }
 
-            return RedirectToPage("./Index");
+                Category.Status = 1;
+                Category.CreationDate = DateTime.Now;
+                Category.ModificationDate = DateTime.Now;
+                Category.IsDeleted = false;
+
+                await _categoryService.Add(Category);
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"An error occurred while creating the category: {ex.Message}");
+                return Page();
+            }
         }
     }
 }
