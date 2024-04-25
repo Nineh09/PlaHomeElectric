@@ -1,12 +1,14 @@
 ﻿@page
 @model HomeElectric.Pages.ShopDetailModel
 @{
+    var product = Model.product;
+    var relatedProduct = Model.Products?.Take(5);
 }
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop Detail</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Index">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Pages</a></li>
         <li class="breadcrumb-item active text-white">Shop Detail</li>
     </ol>
@@ -21,14 +23,14 @@
                     <div class="col-lg-6">
                         <div class="border rounded">
                             <a href="#">
-                                <img src="img/single-item.jpg" class="img-fluid rounded" alt="Image">
+                                <img src="img/laptop-dell-15.jpg" class="img-fluid rounded" alt="@product.ProductName">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <h4 class="fw-bold mb-3">Brocoli</h4>
-                        <p class="mb-3">Category: Vegetables</p>
-                        <h5 class="fw-bold mb-3">3,35 $</h5>
+                        <h4 class="fw-bold mb-3">@product.Title</h4>
+                        <p class="mb-3">Category: Electronics</p>
+                        <h5 class="fw-bold mb-3">@product.Price $</h5>
                         <div class="d-flex mb-4">
                             <i class="fa fa-star text-secondary"></i>
                             <i class="fa fa-star text-secondary"></i>
@@ -36,8 +38,7 @@
                             <i class="fa fa-star text-secondary"></i>
                             <i class="fa fa-star"></i>
                         </div>
-                        <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                        <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
+                        <p class="mb-4">@product.Description</p>
                         <div class="input-group quantity mb-5" style="width: 100px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -70,14 +71,9 @@
                         </nav>
                         <div class="tab-content mb-5">
                             <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                <p>
-                                    The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
-                                    Susp endisse ultricies nisi vel quam suscipit
-                                </p>
-                                <p>
-                                    Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
-                                    icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.
-                                </p>
+                                <p>@product.Description</p>
+                                <!--
+
                                 <div class="px-2">
                                     <div class="row g-4">
                                         <div class="col-6">
@@ -124,6 +120,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
                             </div>
                             <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                 <div class="d-flex">
@@ -228,22 +225,23 @@
                             <ul class="list-unstyled fruite-categorie">
                                 <li>
                                     <div class="d-flex justify-content-between fruite-name">
-                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
+                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Electronics</a>
                                         <span>(3)</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="d-flex justify-content-between fruite-name">
-                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
+                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Clothings</a>
                                         <span>(5)</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="d-flex justify-content-between fruite-name">
-                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
+                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Books</a>
                                         <span>(2)</span>
                                     </div>
                                 </li>
+                                <!--
                                 <li>
                                     <div class="d-flex justify-content-between fruite-name">
                                         <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
@@ -256,11 +254,38 @@
                                         <span>(5)</span>
                                     </div>
                                 </li>
+                                -->
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <h4 class="mb-4">Featured products</h4>
+                        @foreach (var _product in relatedProduct)
+                        {
+                            <div class="d-flex align-items-center justify-content-start">
+                                <div class="rounded" style="width: 100px; height: 100px;">
+                                    <img src="img/laptop-dell-15.jpg" class="img-fluid rounded" alt="Image">
+                                </div>
+                                <div>
+                                    <h6 class="mb-2">@_product.Title</h6>
+                                    <div class="d-flex mb-2">
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="d-flex mb-2">
+                                        <h5 class="fw-bold me-2">@_product.Price $</h5>
+                                        <!--
+                                        <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--
+
                         <div class="d-flex align-items-center justify-content-start">
                             <div class="rounded" style="width: 100px; height: 100px;">
                                 <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image">
@@ -375,13 +400,14 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                         <div class="d-flex justify-content-center my-4">
                             <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="position-relative">
-                            <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                            <img src="img/banner-electric.jpg" class="img-fluid w-100 rounded" alt="">
                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
                                 <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
                             </div>
@@ -393,6 +419,25 @@
         <h1 class="fw-bold mb-0">Related products</h1>
         <div class="vesitable">
             <div class="owl-carousel vegetable-carousel justify-content-center">
+                @foreach (var _product in relatedProduct)
+                {
+                    <div class="border border-primary rounded position-relative vesitable-item">
+                        <div class="vesitable-img">
+                            <img src="img/laptop-dell-15.jpg" class="img-fluid w-100 rounded-top" alt="">
+                        </div>
+                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Electronics</div>
+                        <div class="p-4 pb-0 rounded-bottom">
+                            <h4>@_product.Title</h4>
+                            <p>@_product.Description</p>
+                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                <p class="text-dark fs-5 fw-bold">$@_product.Price / kg</p>
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--
+
                 <div class="border border-primary rounded position-relative vesitable-item">
                     <div class="vesitable-img">
                         <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
@@ -505,6 +550,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
     </div>

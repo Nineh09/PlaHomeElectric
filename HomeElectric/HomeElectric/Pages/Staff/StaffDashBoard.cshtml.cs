@@ -7,6 +7,7 @@ namespace HomeElectric.Pages.Staff
     {
         public void OnGet()
         {
+
         }
     }
 }

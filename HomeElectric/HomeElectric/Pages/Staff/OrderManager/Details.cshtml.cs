@@ -29,6 +29,11 @@ namespace HomeElectric.Pages.Staff.OrderManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (!HttpContext.Session.GetString("RoleId").Equals("Staff"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
             Order = await orderService.GetById((int)id);
             if (Order == null)
             {

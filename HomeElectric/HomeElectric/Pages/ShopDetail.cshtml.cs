@@ -9,6 +9,7 @@ namespace HomeElectric.Pages
     {
         private readonly IProductService _productService;
         public Product? product { get; set; }
+        public List<Product>? Products { get; set; }
         public ShopDetailModel(IProductService productService) {
             _productService = productService;
         }
@@ -19,6 +20,7 @@ namespace HomeElectric.Pages
             product = await _productService.GetById((int)id);
             if (product == null)
                 return NotFound();
+            Products = await _productService.GetAll();
             return Page();
         }
     }
