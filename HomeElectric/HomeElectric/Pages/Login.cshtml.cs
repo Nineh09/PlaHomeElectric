@@ -53,7 +53,7 @@ namespace HomeElectric.Pages
                 }
                 else
                 {
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("/ProductPage");
                 }
             }
             else
