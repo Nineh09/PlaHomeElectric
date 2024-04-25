@@ -24,14 +24,14 @@ namespace HomeElectric.Pages.Customer
 		{
 			var cartSession = HttpContext.Session.GetString("cartSession");
 			var cartExisted = JsonConvert.DeserializeObject<CartModel>(cartSession);
-			var userId = HttpContext.Session.GetString("UserId");
-			userId = "1";
-			var user = userService.GetById(Int32.Parse(userId));
+			var userId = HttpContext.Session.GetInt32("UserId");
+			//userId = "1";
+			if (userId != null) { var user = userService.GetById(userId.Value); }
 			var order = new Order
 			{
 				TotalPrice = cartExisted.TotalPrice,
 				Status = 1,
-				UserId = Int32.Parse(userId),
+				UserId = userId,
 				CreationDate = DateTime.Now,
 			};
 			orderService.Add(order);
