@@ -4,6 +4,8 @@
 @{
     Layout = "StaffLayout";
     ViewData["Title"] = "Details";
+    string email = HttpContext.Session.GetString("Email");
+    string roleid = HttpContext.Session.GetString("RoleId");
 }
 
 <style>
@@ -65,6 +67,12 @@
                     @Html.DisplayFor(model => model.Category.ModificationDate)
                 </dd>
                 <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Category.DeletionDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Category.DeletionDate)
+                </dd>
+                <dt class="col-sm-2">
                     Is Deleted
                 </dt>
                 <dd class="col-sm-10">
@@ -78,3 +86,5 @@
         </div>
     </div>
 </div>
+}
+else { Response.Redirect("/Index"); }

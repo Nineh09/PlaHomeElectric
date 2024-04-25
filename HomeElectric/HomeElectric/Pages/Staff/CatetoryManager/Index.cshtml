@@ -4,8 +4,11 @@
 @{
     Layout = "StaffLayout";
     ViewData["Title"] = "Index";
+    string email = HttpContext.Session.GetString("Email");
+    string roleid = HttpContext.Session.GetString("RoleId");
 }
-
+@if (roleid == "Staff")
+{
 <!-- Link to external CSS file -->
 <link href="~/css/staffindex.css" rel="stylesheet" />
 
@@ -55,4 +58,6 @@
     <p>
         <a asp-page="Create" class="btn btn-primary">Create New</a>
     </p>
-</div>
+    </div>
+}
+else { Response.Redirect("/Index"); }
