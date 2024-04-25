@@ -1,0 +1,33 @@
+﻿.row {
+    display: flex;
+    justify-content: center;
+}
+
+.col-md-4 {
+    width: 50%;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.form-check-input {
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.active-status {
+    color: green;
+}
+
+.inactive-status {
+    color: red;
+}

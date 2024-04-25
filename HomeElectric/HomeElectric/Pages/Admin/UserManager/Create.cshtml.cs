@@ -25,6 +25,12 @@ namespace HomeElectric.Pages.Admin.UserManager
 
         public async Task<IActionResult> OnGet()
         {
+            if (!HttpContext.Session.GetString("RoleId").Equals("Admin"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
+
             ViewData["RoleId"] = new SelectList(await _roleService.GetAll(), "Id", "RoleName");
             return Page();
         }
@@ -37,6 +43,7 @@ namespace HomeElectric.Pages.Admin.UserManager
 
         public async Task<IActionResult> OnPost()
         {
+
             if (!ModelState.IsValid)
             {
                 return Page();

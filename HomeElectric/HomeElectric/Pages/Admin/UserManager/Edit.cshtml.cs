@@ -27,6 +27,12 @@ namespace HomeElectric.Pages.Admin.UserManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (!HttpContext.Session.GetString("RoleId").Equals("Admin"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
+
             ViewData["RoleId"] = new SelectList(await _roleService.GetAll(), "Id", "RoleName");
             User = await _userService.GetById((int)id);
 
