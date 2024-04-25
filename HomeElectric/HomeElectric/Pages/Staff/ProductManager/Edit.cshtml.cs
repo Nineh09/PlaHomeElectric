@@ -28,6 +28,11 @@ namespace HomeElectric.Pages.Staff.ProductManager
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (!HttpContext.Session.GetString("RoleId").Equals("Staff"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
             ViewData["CategoryId"] = new SelectList(await _categoryService.GetAll(), "Id", "CategoryName");
             Product = await _productService.GetById(id.Value);
             if (Product == null)

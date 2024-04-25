@@ -18,6 +18,11 @@ namespace HomeElectric.Pages.Staff.CatetoryManager
 
         public IActionResult OnGet()
         {
+            if (!HttpContext.Session.GetString("RoleId").Equals("Staff"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
             return Page();
         }
 

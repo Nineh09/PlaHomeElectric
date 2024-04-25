@@ -27,6 +27,7 @@ namespace HomeElectric.Pages.Staff.ProductManager
 
         public async Task<IActionResult> OnGetAsync()
         {
+
             ViewData["CategoryId"] = new SelectList(await _categoryService.GetAll(), "Id", "Id");
             var listPro = await productService.GetAll();
             if (listPro != null)

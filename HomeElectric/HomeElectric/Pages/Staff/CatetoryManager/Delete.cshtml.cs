@@ -6,55 +6,59 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject;
+using Service.Interface;
 
 namespace HomeElectric.Pages.Staff.CatetoryManager
 {
     public class DeleteModel : PageModel
     {
-        private readonly BusinessObject.HomeElectricContext _context;
+        private readonly ICategoryService _categoryService;
 
-        public DeleteModel(BusinessObject.HomeElectricContext context)
+        public DeleteModel(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
 
         [BindProperty]
-      public Category Category { get; set; } = default!;
+        public Category Category { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (!HttpContext.Session.GetString("RoleId").Equals("Staff"))
+            {
+                TempData["ErrorMessage"] = "You do not have permission to access this page.";
+                return RedirectToPage("/Index");
+            }
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            Category = await _categoryService.GetById(id.Value);
 
-            if (category == null)
+            if (Category == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Category = category;
-            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var category = await _context.Categories.FindAsync(id);
 
-            if (category != null)
+            var categoryToDelete = await _categoryService.GetById(id.Value);
+
+            if (categoryToDelete == null)
             {
-                Category = category;
-                _context.Categories.Remove(Category);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
+
+            await _categoryService.Delete(categoryToDelete);
 
             return RedirectToPage("./Index");
         }
