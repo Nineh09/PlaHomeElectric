@@ -45,7 +45,7 @@ namespace HomeElectric.Pages
 
                 if (user.RoleId == 1)
                 {
-                    return RedirectToPage("/Admin/AdminDashBoard");
+                    return RedirectToPage("/Admin/UserManager/Index");
                 }
                 else if (user.RoleId == 2)
                 {
